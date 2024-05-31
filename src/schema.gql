@@ -1,0 +1,90 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Comentario {
+  id: Int!
+  comentario: String!
+  puntuacion: Float!
+  reserva: Reserva!
+}
+
+type Reserva {
+  id: Int!
+  descripcion: String
+  fecha: String!
+  bloque: String!
+  usuario: Usuario!
+  comentarios: [Comentario!]
+}
+
+type Usuario {
+  id: Int!
+  nick: String!
+  correo: String!
+  password: String!
+  estado: String!
+  reservas: [Reserva!]
+}
+
+type Query {
+  listarUsuarios: [Usuario!]!
+  buscarUsuarioPorId(id: Int!): Usuario!
+  listarReservas: [Reserva!]!
+  reserva(id: Int!): Reserva!
+  listarComentarios: [Comentario!]!
+  comentario(id: Int!): Comentario!
+}
+
+type Mutation {
+  crearUsuario(createUsuarioInput: CreateUsuarioInput!): Usuario!
+  updateUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
+  removeUsuario(id: Int!): Usuario!
+  createReserva(createReservaInput: CreateReservaInput!): Reserva!
+  updateReserva(updateReservaInput: UpdateReservaInput!): Reserva!
+  removeReserva(id: Int!): Boolean!
+  createComentario(createComentarioInput: CreateComentarioInput!): Comentario!
+  updateComentario(updateComentarioInput: UpdateComentarioInput!): Comentario!
+  removeComentario(id: Int!): Comentario!
+}
+
+input CreateUsuarioInput {
+  nick: String!
+  correo: String!
+  password: String!
+}
+
+input UpdateUsuarioInput {
+  nick: String
+  correo: String
+  password: String
+  id: Int!
+}
+
+input CreateReservaInput {
+  descripcion: String
+  fecha: String!
+  bloque: String!
+  usuarioId: Int!
+}
+
+input UpdateReservaInput {
+  descripcion: String
+  fecha: String
+  bloque: String
+  usuarioId: Int
+  id: Int!
+}
+
+input CreateComentarioInput {
+  comentario: String!
+  puntuacion: Float!
+  reservaId: Int!
+}
+
+input UpdateComentarioInput {
+  comentario: String
+  puntuacion: Float
+  reservaId: Int
+  id: Int!
+}
