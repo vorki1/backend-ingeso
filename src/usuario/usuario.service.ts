@@ -4,6 +4,8 @@ import { UpdateUsuarioInput } from './dto/update-usuario.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
+
 
 @Injectable()
 export class UsuarioService {
@@ -26,6 +28,10 @@ export class UsuarioService {
     });
   }
 
+  async findUserByEmail(correo: string): Promise<Usuario | undefined> {
+    return this.usuarioRepository.findOne({ where: { correo } });
+  }
+
   update(id: number, updateUsuarioInput: UpdateUsuarioInput) {
     return `This action updates a #${id} usuario`;
   }
@@ -33,4 +39,22 @@ export class UsuarioService {
   remove(id: number) {
     return `This action removes a #${id} usuario`;
   }
+
+  //login
+  async validateUser(correo: string, password: string): Promise<boolean> {
+    console.log('correo enviado:', correo);
+    const user = await this.findUserByEmail(correo);
+    console.log('Usuario encontrado:', user);
+    if (user) {
+      const isPasswordMatch = password === user.password;
+      console.log('contraseña ingresada:', password);
+      console.log('contraseña del usuario:', user.password);
+      console.log('Comparación de contraseñas:', isPasswordMatch);
+      if (isPasswordMatch) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
+

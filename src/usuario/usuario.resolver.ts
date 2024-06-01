@@ -32,4 +32,18 @@ export class UsuarioResolver {
   removeUsuario(@Args('id', { type: () => Int }) id: number) {
     return this.usuarioService.remove(id);
   }
+
+  @Mutation(() => Boolean)
+  async login(
+    @Args('correo') correo: string,
+    @Args('password') password: string,
+  ): Promise<boolean> {
+    return this.usuarioService.validateUser(correo, password);
+  }
+
+  @Query(() => Usuario, { nullable: true })
+  async getUserByEmail(@Args('correo') correo: string): Promise<Usuario | undefined> {
+    return this.usuarioService.findUserByEmail(correo);
+  }
 }
+

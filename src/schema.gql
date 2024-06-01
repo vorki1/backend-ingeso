@@ -30,6 +30,7 @@ type Usuario {
 type Query {
   listarUsuarios: [Usuario!]!
   buscarUsuarioPorId(id: Int!): Usuario!
+  getUserByEmail(correo: String!): Usuario
   listarReservas: [Reserva!]!
   reserva(id: Int!): Reserva!
   listarComentarios: [Comentario!]!
@@ -40,6 +41,7 @@ type Mutation {
   crearUsuario(createUsuarioInput: CreateUsuarioInput!): Usuario!
   updateUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
   removeUsuario(id: Int!): Usuario!
+  login(correo: String!, password: String!): Boolean!
   createReserva(createReservaInput: CreateReservaInput!): Reserva!
   updateReserva(updateReservaInput: UpdateReservaInput!): Reserva!
   removeReserva(id: Int!): Boolean!
